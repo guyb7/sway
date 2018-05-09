@@ -1,21 +1,6 @@
-# Install
+# Sway
 
-```
-git pull --depth 1 git@github.com:guyb7/create-material-app.git react-app
-cd react-app
-yarn
-yarn start
-```
-```
-git remote set-url origin git@github.com:guyb7/new-project-url.git
-git add -A
-git commit -m 'init commit'
-```
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+An online editor for diplomas and certifications.
 
 ## Table of Contents
 

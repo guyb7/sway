@@ -25,7 +25,7 @@ class Footer extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.text}>
-          React App
+          Sway
         </div>
       </div>
     )
