@@ -1,8 +1,11 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import CssBaseline from 'material-ui/CssBaseline'
 import { withStyles } from 'material-ui/styles'
 import Theme from './Theme'
+
+import store from './store'
 
 import Editor from './components/Editor'
 import Navbar from './components/Navbar'
@@ -21,14 +24,16 @@ class App extends React.Component {
   render () {
     const { classes } = this.props
     return (
-      <MuiThemeProvider theme={Theme}>
-        <CssBaseline />
-        <div className={classes.root}>
-          <Navbar />
-          <Editor />
-          <Footer />
-        </div>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider theme={Theme}>
+          <CssBaseline />
+          <div className={classes.root}>
+            <Navbar />
+            <Editor />
+            <Footer />
+          </div>
+        </MuiThemeProvider>
+      </Provider>
     )
   }
 }
