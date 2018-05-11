@@ -4,7 +4,7 @@ import CssBaseline from 'material-ui/CssBaseline'
 import { withStyles } from 'material-ui/styles'
 import Theme from './Theme'
 
-import Home from './components/Home'
+import Editor from './components/Editor'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
@@ -25,7 +25,7 @@ class App extends React.Component {
         <CssBaseline />
         <div className={classes.root}>
           <Navbar />
-          <Home />
+          <Editor />
           <Footer />
         </div>
       </MuiThemeProvider>
