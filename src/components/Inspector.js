@@ -24,6 +24,9 @@ const styles = theme => {
       ...theme.typography.caption,
       marginBottom: theme.spacing.double
     },
+    itemTitle: {
+      ...theme.typography.caption
+    },
     button: {
       marginTop: theme.spacing.unit
     },
@@ -53,21 +56,30 @@ class Inspector extends React.Component {
     }
     for (let k in selectedComponent.props) {
       const overrideValue = get(canvas, `overrides.${selectedComponent.id}.${k}`, null)
-      const value = overrideValue || selectedComponent.props[k]
+      const value = overrideValue !== null ? overrideValue : selectedComponent.props[k]
       switch (k) {
         case 'text':
-          fields.push(<TextField
-            key={k}
-            label='Text'
-            className={classes.textField}
-            value={value}
-            onChange={e => { update(k, e.target.value) }}
-          />)
+          fields.push(<div className={classes.itemContainer}>
+            <div className={classes.itemTitle}>
+              Text
+            </div>
+            <TextField
+              key={k}
+              className={classes.textField}
+              value={value}
+              onChange={e => { update(k, e.target.value) }}
+            />
+          </div>)
           break
         default:
       }
     }
-    return <form className={classes.form} noValidate autoComplete='off'>
+    return <form
+      className={classes.form}
+      noValidate
+      autoComplete='off'
+      onSubmit={e => e.preventDefault()}
+    >
       <div className={classes.title}>{selectedComponent.name}</div>
       {
         [...fields]

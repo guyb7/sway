@@ -16,6 +16,7 @@ const styles = theme => {
     },
     component: {
       cursor: 'default',
+      border: `1px solid transparent`,
       '&:hover': {
         border: `1px solid ${theme.palette.red[100]}`
       },

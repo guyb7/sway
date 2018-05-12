@@ -10,7 +10,15 @@ const BasicTemplate = {
       component: Text,
       props: {
         text: 'Bob',
-        color: 'blue'
+        color: '#0000ff'
+      }
+    }, {
+      id: 'description',
+      name: 'Description',
+      component: Text,
+      props: {
+        text: 'The amazing',
+        color: '#ff0000'
       }
     }
   ]
