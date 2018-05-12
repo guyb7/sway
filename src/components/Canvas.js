@@ -48,11 +48,16 @@ class Canvas extends React.Component {
             if (canvas.texts[l.id]) {
               props.text = canvas.texts[l.id]
             }
+            let overrides = {}
+            if (canvas.overrides[l.id]) {
+              overrides = canvas.overrides[l.id]
+            }
             const isSelected = selectedComponent === l.id
             return (
               <Component
                 key={l.id}
                 {...props}
+                {...overrides}
                 onClick={this.selectComponent(l.id)}
                 className={`${classes.component} ${isSelected ? 'selected' : ''}`}
               />

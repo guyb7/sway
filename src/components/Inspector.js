@@ -1,9 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button'
 import CartIcon from 'mdi-material-ui/Cart'
 import PdfIcon from 'mdi-material-ui/FilePdf'
+
+import canvasActions from '../store/actions/canvas'
 
 const styles = theme => {
   return {
@@ -25,11 +28,27 @@ const styles = theme => {
 }
 
 class Inspector extends React.Component {
+  setValue = (componentId, prop, value) => () => {
+    this.props.override({ componentId, prop, value })
+  }
+
+  renderFields = selectedComponent => {
+    return <div>
+      {
+        selectedComponent && <div onClick={this.setValue(selectedComponent.id, 'text', 'Guy')}>selectedComponent.id</div>
+      }
+      {
+        !selectedComponent && 'Document'
+      }
+    </div>
+  }
+
   render () {
-    const { classes } = this.props
+    const { classes, canvas } = this.props
+    const selectedComponent = canvas.selected ? canvas.layers.filter(l => l.id === canvas.selected)[0] : null
     return (
       <div className={classes.root}>
-        Inspector
+        {this.renderFields(selectedComponent)}
         <div>
           <Button
             className={classes.button}
@@ -51,4 +70,23 @@ class Inspector extends React.Component {
   }
 }
 
-export default withStyles(styles)(Inspector)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    canvas: state.canvas
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    override ({ componentId, prop, value }) {
+      dispatch(canvasActions.override({ componentId, prop, value }))
+    }
+  }
+}
+
+const connectedInspector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Inspector)
+
+export default withStyles(styles)(connectedInspector)

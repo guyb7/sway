@@ -12,6 +12,14 @@ export default {
       text
     }
   },
+  override ({ componentId, prop, value }) {
+    return {
+      type: 'OVERRIDE',
+      componentId,
+      prop,
+      value
+    }
+  },
   select (componentId) {
     return {
       type: 'SELECT',

@@ -1,6 +1,7 @@
 const defaultState = {
   layers: [],
   texts: {},
+  overrides: {},
   selected: null
 }
 
@@ -9,7 +10,8 @@ const canvas = (state = defaultState, action) => {
     case 'SET_LAYERS':
       return {
         ...state,
-        layers: action.layers
+        layers: action.layers,
+        overrides: {}
       }
     case 'SET_TEXT':
       const texts = {
@@ -19,6 +21,17 @@ const canvas = (state = defaultState, action) => {
       return {
         ...state,
         texts
+      }
+    case 'OVERRIDE':
+      const componentOverrides = { ...state.overrides[action.componentId] }
+      componentOverrides[action.prop] = action.value
+      const overrides = {
+        ...state.overrides,
+        [action.componentId]: componentOverrides
+      }
+      return {
+        ...state,
+        overrides
       }
     case 'SELECT':
       return {
