@@ -1,4 +1,5 @@
 import { createMuiTheme } from 'material-ui/styles'
+import red from 'material-ui/colors/red'
 
 const Theme = createMuiTheme({
   palette: {
@@ -19,7 +20,8 @@ const Theme = createMuiTheme({
       orange: '#c26b36',
       darkBrown: '#453615',
       darkYellow: '#b8a561'
-    }
+    },
+    red
   },
   spacing: {
     half: 4,

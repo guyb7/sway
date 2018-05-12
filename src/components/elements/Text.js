@@ -11,9 +11,9 @@ const styles = theme => {
 
 class Text extends React.Component {
   render () {
-    const { classes, text } = this.props
+    const { classes, text, className, ...rest } = this.props
     return (
-      <div className={classes.root}>
+      <div className={`${className} ${classes.root}`} {...rest}>
         {text}
       </div>
     )
