@@ -1,10 +1,11 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
-// import Icon from 'material-ui/Icon'
 import IconButton from 'material-ui/IconButton'
 import ChevronLeft from 'mdi-material-ui/ChevronLeft'
 import ChevronRight from 'mdi-material-ui/ChevronRight'
+
+import Templates from './templates/'
 
 const styles = theme => {
   return {
@@ -42,8 +43,45 @@ const styles = theme => {
 }
 
 class Navbar extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      current: 0
+    }
+  }
+
+  next = () => {
+    if (this.state.current < Templates.templates.length - 1) {
+      this.setState({
+        ...this.state,
+        current: this.state.current + 1
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        current: 0
+      })
+    }
+  }
+
+  prev = () => {
+    if (this.state.current > 0) {
+      this.setState({
+        ...this.state,
+        current: this.state.current - 1
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        current: Templates.templates.length
+      })
+    }
+  }
+
   render () {
     const { classes } = this.props
+    const template = Templates.templates[this.state.current]
+
     return (
       <div className={classes.root}>
         <div className={classes.container}>
@@ -51,13 +89,13 @@ class Navbar extends React.Component {
             Sway
           </div>
           <div className={classes.templatesContainer}>
-            <IconButton>
+            <IconButton onClick={this.prev}>
               <ChevronLeft />
             </IconButton>
             <div className={classes.templateText}>
-              Template 01
+              {template.name}
             </div>
-            <IconButton>
+            <IconButton onClick={this.next}>
               <ChevronRight />
             </IconButton>
           </div>

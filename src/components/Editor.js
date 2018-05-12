@@ -11,7 +11,7 @@ const styles = theme => {
       gridTemplateColumns: `auto ${theme.spacing.huge * 2}px`,
       gridTemplateRows: 'auto',
       width: '100%',
-      height: '100%',
+      height: '80vh',
       fontSize: 14
     }
   }

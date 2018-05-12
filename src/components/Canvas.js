@@ -5,6 +5,7 @@ const styles = theme => {
   return {
     root: {
       backgroundColor: theme.palette.common.white,
+      height: '100%',
       minHeight: 400,
       display: 'flex',
       justifyContent: 'center',
