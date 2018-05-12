@@ -4,16 +4,18 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => {
   return {
     root: {
-      color: 'red'
     }
   }
 }
 
 class Text extends React.Component {
   render () {
-    const { classes, text, className, ...rest } = this.props
+    const { classes, text, className, color, ...rest } = this.props
+    const style = {
+      color
+    }
     return (
-      <div className={`${className} ${classes.root}`} {...rest}>
+      <div className={`${className} ${classes.root}`} style={style} {...rest}>
         {text}
       </div>
     )

@@ -6,9 +6,11 @@ const BasicTemplate = {
   layers: [
     {
       id: 'name',
+      name: 'Name',
       component: Text,
       props: {
-        text: 'Bob'
+        text: 'Bob',
+        color: 'blue'
       }
     }
   ]

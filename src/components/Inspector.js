@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
+import get from 'lodash/get'
 
 import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 import CartIcon from 'mdi-material-ui/Cart'
 import PdfIcon from 'mdi-material-ui/FilePdf'
 
@@ -18,6 +20,10 @@ const styles = theme => {
       flexDirection: 'column',
       justifyContent: 'space-between'
     },
+    title: {
+      ...theme.typography.caption,
+      marginBottom: theme.spacing.double
+    },
     button: {
       marginTop: theme.spacing.unit
     },
@@ -28,19 +34,45 @@ const styles = theme => {
 }
 
 class Inspector extends React.Component {
-  setValue = (componentId, prop, value) => () => {
+  setValue = (componentId, prop, value) => {
     this.props.override({ componentId, prop, value })
   }
 
-  renderFields = selectedComponent => {
+  renderDocumentFields = () => {
+    const { classes } = this.props
     return <div>
-      {
-        selectedComponent && <div onClick={this.setValue(selectedComponent.id, 'text', 'Guy')}>selectedComponent.id</div>
-      }
-      {
-        !selectedComponent && 'Document'
-      }
+      <div className={classes.title}>Document</div>
     </div>
+  }
+
+  renderComponentFields = selectedComponent => {
+    const { classes, canvas } = this.props
+    const fields = []
+    const update = (prop, value) => {
+      this.setValue(selectedComponent.id, prop, value)
+    }
+    for (let k in selectedComponent.props) {
+      const overrideValue = get(canvas, `overrides.${selectedComponent.id}.${k}`, null)
+      const value = overrideValue || selectedComponent.props[k]
+      switch (k) {
+        case 'text':
+          fields.push(<TextField
+            key={k}
+            label='Text'
+            className={classes.textField}
+            value={value}
+            onChange={e => { update(k, e.target.value) }}
+          />)
+          break
+        default:
+      }
+    }
+    return <form className={classes.form} noValidate autoComplete='off'>
+      <div className={classes.title}>{selectedComponent.name}</div>
+      {
+        [...fields]
+      }
+    </form>
   }
 
   render () {
@@ -48,7 +80,8 @@ class Inspector extends React.Component {
     const selectedComponent = canvas.selected ? canvas.layers.filter(l => l.id === canvas.selected)[0] : null
     return (
       <div className={classes.root}>
-        {this.renderFields(selectedComponent)}
+        {selectedComponent && this.renderComponentFields(selectedComponent)}
+        {!selectedComponent && this.renderDocumentFields()}
         <div>
           <Button
             className={classes.button}
