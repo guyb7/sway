@@ -1,14 +1,24 @@
 const defaultState = {
-  data: {},
+  layers: [],
+  texts: {},
   selected: null
 }
 
 const canvas = (state = defaultState, action) => {
   switch (action.type) {
-    case 'SET_DATA':
+    case 'SET_LAYERS':
       return {
         ...state,
-        data: action.data
+        layers: action.layers
+      }
+    case 'SET_TEXT':
+      const texts = {
+        ...state.texts,
+        [action.id]: action.text
+      }
+      return {
+        ...state,
+        texts
       }
     case 'SELECT':
       return {

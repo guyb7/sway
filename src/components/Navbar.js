@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 import IconButton from 'material-ui/IconButton'
@@ -6,6 +7,8 @@ import ChevronLeft from 'mdi-material-ui/ChevronLeft'
 import ChevronRight from 'mdi-material-ui/ChevronRight'
 
 import Templates from './templates/'
+
+import canvasActions from '../store/actions/canvas'
 
 const styles = theme => {
   return {
@@ -50,31 +53,34 @@ class Navbar extends React.Component {
     }
   }
 
+  componentDidMount () {
+    this.setCanvasLayers()
+  }
+
+  setCanvasLayers = () => {
+    this.props.setLayers(Templates.templates[this.state.current].layers)
+  }
+
+  setCurrent = idx => {
+    this.setState({
+      ...this.state,
+      current: idx
+    }, this.setCanvasLayers)
+  }
+
   next = () => {
     if (this.state.current < Templates.templates.length - 1) {
-      this.setState({
-        ...this.state,
-        current: this.state.current + 1
-      })
+      this.setCurrent(this.state.current + 1)
     } else {
-      this.setState({
-        ...this.state,
-        current: 0
-      })
+      this.setCurrent(0)
     }
   }
 
   prev = () => {
     if (this.state.current > 0) {
-      this.setState({
-        ...this.state,
-        current: this.state.current - 1
-      })
+      this.setCurrent(this.state.current - 1)
     } else {
-      this.setState({
-        ...this.state,
-        current: Templates.templates.length
-      })
+      this.setCurrent(Templates.templates.length - 1)
     }
   }
 
@@ -106,4 +112,21 @@ class Navbar extends React.Component {
   }
 }
 
-export default withStyles(styles)(Navbar)
+const mapStateToProps = (state, ownProps) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    setLayers (layers) {
+      dispatch(canvasActions.setLayers(layers))
+    }
+  }
+}
+
+const connectedNavbar = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar)
+
+export default withStyles(styles)(connectedNavbar)

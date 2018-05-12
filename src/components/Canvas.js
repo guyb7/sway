@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 const styles = theme => {
@@ -16,13 +17,32 @@ const styles = theme => {
 
 class Canvas extends React.Component {
   render () {
-    const { classes } = this.props
+    const { classes, canvas } = this.props
     return (
       <div className={classes.root}>
-        Canvas
+        {
+          canvas.layers.map(l => {
+            const Component = l.component
+            const props = { ...l.props }
+            if (canvas.texts[l.id]) {
+              props.text = canvas.texts[l.id]
+            }
+            return <Component key={l.id} {...props} />
+          })
+        }
       </div>
     )
   }
 }
 
-export default withStyles(styles)(Canvas)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    canvas: state.canvas
+  }
+}
+
+const connectedCanvas = connect(
+  mapStateToProps
+)(Canvas)
+
+export default withStyles(styles)(connectedCanvas)

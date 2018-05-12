@@ -1,8 +1,15 @@
 export default {
-  setUser (data) {
+  setLayers (layers) {
     return {
-      type: 'SET_DATA',
-      data
+      type: 'SET_LAYERS',
+      layers
+    }
+  },
+  setText ({ id, text }) {
+    return {
+      type: 'SET_TEXT',
+      id,
+      text
     }
   },
   select (componentId) {

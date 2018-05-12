@@ -9,9 +9,9 @@ const templates = [
 ]
 
 const templatesDict = {}
-templates.map(t => {
+for (let t of templates) {
   templatesDict[t.id] = t
-})
+}
 
 const get = id => templatesDict[id]
 
