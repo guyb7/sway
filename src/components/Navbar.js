@@ -58,7 +58,7 @@ class Navbar extends React.Component {
   }
 
   setCanvasLayers = () => {
-    this.props.setLayers(Templates.templates[this.state.current].layers)
+    this.props.setTemplate(Templates.templates[this.state.current])
   }
 
   setCurrent = idx => {
@@ -118,8 +118,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setLayers (layers) {
-      dispatch(canvasActions.setLayers(layers))
+    setTemplate (template) {
+      dispatch(canvasActions.setFrame(template.frame))
+      dispatch(canvasActions.setPapers(template.papers))
     }
   }
 }

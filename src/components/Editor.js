@@ -13,6 +13,9 @@ const styles = theme => {
       width: '100%',
       height: '80vh',
       fontSize: 14
+    },
+    canvas: {
+      overflow: 'hidden'
     }
   }
 }
@@ -22,7 +25,7 @@ class Editor extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Canvas />
+        <Canvas className={classes.canvas} />
         <Inspector />
       </div>
     )

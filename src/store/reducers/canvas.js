@@ -1,26 +1,22 @@
 const defaultState = {
-  layers: [],
-  texts: {},
+  frame: null,
+  papers: [],
   overrides: {},
   selected: null
 }
 
 const canvas = (state = defaultState, action) => {
   switch (action.type) {
-    case 'SET_LAYERS':
+    case 'SET_FRAME':
       return {
         ...state,
-        layers: action.layers,
+        frame: action.frame
+      }
+    case 'SET_PAPERS':
+      return {
+        ...state,
+        papers: action.papers,
         overrides: {}
-      }
-    case 'SET_TEXT':
-      const texts = {
-        ...state.texts,
-        [action.id]: action.text
-      }
-      return {
-        ...state,
-        texts
       }
     case 'OVERRIDE':
       const componentOverrides = { ...state.overrides[action.componentId] }

@@ -1,15 +1,14 @@
 export default {
-  setLayers (layers) {
+  setFrame (frame) {
     return {
-      type: 'SET_LAYERS',
-      layers
+      type: 'SET_FRAME',
+      frame
     }
   },
-  setText ({ id, text }) {
+  setPapers (papers) {
     return {
-      type: 'SET_TEXT',
-      id,
-      text
+      type: 'SET_PAPERS',
+      papers
     }
   },
   override ({ componentId, prop, value }) {
