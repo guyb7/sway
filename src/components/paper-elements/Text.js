@@ -10,13 +10,13 @@ const styles = theme => {
 
 class Text extends React.Component {
   render () {
-    const { classes, text, className, color, ...rest } = this.props
+    const { classes, children, className, color, ...rest } = this.props
     const style = {
       color
     }
     return (
       <div className={`${className} ${classes.root}`} style={style} {...rest}>
-        {text}
+        {children}
       </div>
     )
   }

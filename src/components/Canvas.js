@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 
 import canvasActions from '../store/actions/canvas'
 
-import Frame from './elements/Frame'
+import Frame from './Frame'
 import Paper from './elements/Paper'
 
 const styles = theme => {
@@ -58,7 +58,7 @@ class Canvas extends React.Component {
             <Frame {...canvas.frame} dpi={dpi}>
               {
                 canvas.papers && canvas.papers.map((p, n) => {
-                  return <Paper key={n} {...p} dpi={dpi} />
+                  return <Paper key={n} {...p} dpi={dpi} canvas={canvas} />
                 })
               }
             </Frame>

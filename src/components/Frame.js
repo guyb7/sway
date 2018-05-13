@@ -1,6 +1,8 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
+// import Frame from '../../svg/frame-1.svg'
+
 const mmToPx = (size, dpi) => {
   const MM_IN_INCH = 25.4
   return size * dpi / MM_IN_INCH
@@ -9,7 +11,7 @@ const mmToPx = (size, dpi) => {
 const styles = theme => {
   return {
     root: {
-      border: '2px solid red'
+      border: '2px solid #aa0000'
     }
   }
 }

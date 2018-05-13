@@ -1,6 +1,8 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
+import Templates from '../paper-templates/'
+
 const mmToPx = (size, dpi) => {
   const MM_IN_INCH = 25.4
   return size * dpi / MM_IN_INCH
@@ -9,7 +11,7 @@ const mmToPx = (size, dpi) => {
 const styles = theme => {
   return {
     root: {
-      backgroundColor: 'yellow'
+      backgroundColor: '#ffff88'
     }
   }
 }
@@ -23,6 +25,7 @@ class Paper extends React.Component {
       size,
       defaultState,
       dpi,
+      canvas,
       ...rest
     } = this.props
     const positionPx = {
@@ -37,9 +40,10 @@ class Paper extends React.Component {
       width: mmToPx(size.width, dpi),
       height: mmToPx(size.height, dpi)
     }
+    const PaperTemplate = Templates[template]
     return (
       <div className={classes.root} style={style} {...rest}>
-        Paper
+        <PaperTemplate />
       </div>
     )
   }
