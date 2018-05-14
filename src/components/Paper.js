@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
+import defaults from 'lodash/defaults'
 
 import Templates from './paper-templates/'
 
@@ -25,7 +26,9 @@ class Paper extends React.Component {
       size,
       defaultState,
       dpi,
-      canvas,
+      overrides,
+      selectComponent,
+      selectedComponent,
       ...rest
     } = this.props
     const positionPx = {
@@ -40,10 +43,15 @@ class Paper extends React.Component {
       width: mmToPx(size.width, dpi),
       height: mmToPx(size.height, dpi)
     }
+    const paperState = defaults(overrides, defaultState)
     const PaperTemplate = Templates[template]
     return (
       <div className={classes.root} style={style} {...rest}>
-        <PaperTemplate />
+        <PaperTemplate
+          paperState={paperState}
+          selectComponent={selectComponent}
+          selectedComponent={selectedComponent}
+        />
       </div>
     )
   }

@@ -11,18 +11,18 @@ export default {
       papers
     }
   },
-  override ({ componentId, prop, value }) {
+  override ({ key, value }) {
     return {
       type: 'OVERRIDE',
-      componentId,
-      prop,
+      key,
       value
     }
   },
-  select (componentId) {
+  select (componentId, componentFields) {
     return {
       type: 'SELECT',
-      componentId
+      componentId,
+      componentFields
     }
   },
   deselect () {

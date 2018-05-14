@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
-import get from 'lodash/get'
 
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
@@ -37,8 +36,8 @@ const styles = theme => {
 }
 
 class Inspector extends React.Component {
-  setValue = (componentId, prop, value) => {
-    this.props.override({ componentId, prop, value })
+  setValue = (key, value) => {
+    this.props.override({ key, value })
   }
 
   renderDocumentFields = () => {
@@ -48,26 +47,23 @@ class Inspector extends React.Component {
     </div>
   }
 
-  renderComponentFields = selectedComponent => {
-    const { classes, canvas } = this.props
+  renderComponentFields = selectedFields => {
+    const { classes } = this.props
     const fields = []
-    const update = (prop, value) => {
-      this.setValue(selectedComponent.id, prop, value)
+    const update = (key, value) => {
+      this.setValue(key, value)
     }
-    for (let k in selectedComponent.props) {
-      const overrideValue = get(canvas, `overrides.${selectedComponent.id}.${k}`, null)
-      const value = overrideValue !== null ? overrideValue : selectedComponent.props[k]
-      switch (k) {
+    for (let f of selectedFields) {
+      switch (f.type) {
         case 'text':
-          fields.push(<div className={classes.itemContainer}>
+          fields.push(<div className={classes.itemContainer} key={f.key}>
             <div className={classes.itemTitle}>
               Text
             </div>
             <TextField
-              key={k}
               className={classes.textField}
-              value={value}
-              onChange={e => { update(k, e.target.value) }}
+              defaultValue={f.value}
+              onChange={e => { update(f.key, e.target.value) }}
             />
           </div>)
           break
@@ -80,7 +76,7 @@ class Inspector extends React.Component {
       autoComplete='off'
       onSubmit={e => e.preventDefault()}
     >
-      <div className={classes.title}>{selectedComponent.name}</div>
+      <div className={classes.title}>{selectedFields.name}</div>
       {
         [...fields]
       }
@@ -89,11 +85,11 @@ class Inspector extends React.Component {
 
   render () {
     const { classes, canvas } = this.props
-    const selectedComponent = canvas.selected ? canvas.layers.filter(l => l.id === canvas.selected)[0] : null
+    const selectedFields = canvas.selected ? canvas.selected.fields : null
     return (
       <div className={classes.root}>
-        {selectedComponent && this.renderComponentFields(selectedComponent)}
-        {!selectedComponent && this.renderDocumentFields()}
+        {selectedFields && this.renderComponentFields(selectedFields)}
+        {!selectedFields && this.renderDocumentFields()}
         <div>
           <Button
             className={classes.button}
@@ -123,8 +119,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    override ({ componentId, prop, value }) {
-      dispatch(canvasActions.override({ componentId, prop, value }))
+    override ({ key, value }) {
+      dispatch(canvasActions.override({ key, value }))
     }
   }
 }

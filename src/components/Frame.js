@@ -11,7 +11,8 @@ const mmToPx = (size, dpi) => {
 const styles = theme => {
   return {
     root: {
-      border: '2px solid #aa0000'
+      border: '2px solid #aa0000',
+      backgroundColor: '#ffcccc'
     }
   }
 }

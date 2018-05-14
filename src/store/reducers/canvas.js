@@ -19,11 +19,9 @@ const canvas = (state = defaultState, action) => {
         overrides: {}
       }
     case 'OVERRIDE':
-      const componentOverrides = { ...state.overrides[action.componentId] }
-      componentOverrides[action.prop] = action.value
       const overrides = {
         ...state.overrides,
-        [action.componentId]: componentOverrides
+        [action.key]: action.value
       }
       return {
         ...state,
@@ -32,7 +30,10 @@ const canvas = (state = defaultState, action) => {
     case 'SELECT':
       return {
         ...state,
-        selected: action.componentId
+        selected: {
+          id: action.componentId,
+          fields: action.componentFields
+        }
       }
     case 'DESELECT':
       return {

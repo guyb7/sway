@@ -21,16 +21,6 @@ const styles = theme => {
       alignItems: 'center',
       position: 'relative'
     },
-    component: {
-      cursor: 'default',
-      border: `1px solid transparent`,
-      '&:hover': {
-        border: `1px solid ${theme.palette.red[100]}`
-      },
-      '&.selected': {
-        border: `1px solid ${theme.palette.red[400]}`
-      }
-    },
     zoomContainer: {
       position: 'absolute',
       bottom: theme.spacing.unit,
@@ -95,7 +85,14 @@ class Canvas extends React.Component {
             <Frame {...canvas.frame} dpi={dpi}>
               {
                 canvas.papers && canvas.papers.map((p, n) => {
-                  return <Paper key={n} {...p} dpi={dpi} canvas={canvas} />
+                  return <Paper
+                    key={n}
+                    {...p}
+                    dpi={dpi}
+                    overrides={canvas.overrides}
+                    selectedComponent={canvas.selected}
+                    selectComponent={this.props.selectComponent}
+                  />
                 })
               }
             </Frame>
@@ -106,32 +103,6 @@ class Canvas extends React.Component {
   }
 }
 
-// const selectedComponent = canvas.selected
-// {
-//   canvas.layers.map(l => {
-//     const Component = l.component
-//     const props = { ...l.props }
-//     if (canvas.texts[l.id]) {
-//       props.text = canvas.texts[l.id]
-//     }
-//     let overrides = {}
-//     if (canvas.overrides[l.id]) {
-//       overrides = canvas.overrides[l.id]
-//     }
-//     const isSelected = selectedComponent === l.id
-//     return (
-//       <Component
-//         key={l.id}
-//         {...props}
-//         {...overrides}
-//         onClick={this.selectComponent(l.id)}
-//         className={`${classes.component} ${isSelected ? 'selected' : ''}`}
-//       />
-//     )
-//   })
-// }
-// </div>
-
 const mapStateToProps = (state, ownProps) => {
   return {
     canvas: state.canvas
@@ -140,8 +111,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    selectComponent (id) {
-      dispatch(canvasActions.select(id))
+    selectComponent (id, fields) {
+      dispatch(canvasActions.select(id, fields))
     },
     deselectComponents () {
       dispatch(canvasActions.deselect())
