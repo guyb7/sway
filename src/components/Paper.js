@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 
-import Templates from '../paper-templates/'
+import Templates from './paper-templates/'
 
 const mmToPx = (size, dpi) => {
   const MM_IN_INCH = 25.4

@@ -5,7 +5,11 @@ import { withStyles } from 'material-ui/styles'
 import canvasActions from '../store/actions/canvas'
 
 import Frame from './Frame'
-import Paper from './elements/Paper'
+import Paper from './Paper'
+
+import IconButton from 'material-ui/IconButton'
+import ZoomInIcon from 'mdi-material-ui/MagnifyPlusOutline'
+import ZoomOutIcon from 'mdi-material-ui/MagnifyMinusOutline'
 
 const styles = theme => {
   return {
@@ -14,7 +18,8 @@ const styles = theme => {
       minHeight: 400,
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      position: 'relative'
     },
     component: {
       cursor: 'default',
@@ -25,6 +30,16 @@ const styles = theme => {
       '&.selected': {
         border: `1px solid ${theme.palette.red[400]}`
       }
+    },
+    zoomContainer: {
+      position: 'absolute',
+      bottom: theme.spacing.unit,
+      left: theme.spacing.unit,
+      zIndex: 100
+    },
+    zoomButton: {
+      height: theme.spacing.quad,
+      width: theme.spacing.quad
     }
   }
 }
@@ -47,11 +62,33 @@ class Canvas extends React.Component {
     this.props.deselectComponents()
   }
 
+  zoomIn = () => {
+    this.setState({
+      ...this.state,
+      zoom: this.state.zoom * 1.25
+    })
+  }
+
+  zoomOut = () => {
+    this.setState({
+      ...this.state,
+      zoom: this.state.zoom / 1.25
+    })
+  }
+
   render () {
-    const { classes, className='', canvas } = this.props
+    const { classes, className = '', canvas } = this.props
     const { dpi, zoom } = this.state
     return (
       <div className={`${className} ${classes.root}`} onClick={this.deselect}>
+        <div className={classes.zoomContainer}>
+          <IconButton className={classes.zoomButton} onClick={this.zoomOut}>
+            <ZoomOutIcon />
+          </IconButton>
+          <IconButton className={classes.zoomButton} onClick={this.zoomIn}>
+            <ZoomInIcon />
+          </IconButton>
+        </div>
         <div style={{ transform: `scale(${zoom})` }}>
           {
             canvas.frame &&
