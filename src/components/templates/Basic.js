@@ -22,8 +22,11 @@ const BasicTemplate = {
         height: 297
       },
       defaultState: {
-        name: 'George',
-        description: 'Dragonslayership Mastery'
+        university: 'Glorious University',
+        text1: 'Upon Nomination of the Faculty of the College of Science and Class, this individual has been awarded the',
+        title: 'Dragonslayership',
+        subtitle: 'Bachelor of Scinece',
+        text2: 'for their excellence in practice and understanding within their field and hold the rights and privilege thereon pertaining to their study.'
       }
     }
   ]

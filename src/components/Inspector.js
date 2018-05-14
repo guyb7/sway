@@ -56,6 +56,7 @@ class Inspector extends React.Component {
     for (let f of selectedFields) {
       switch (f.type) {
         case 'text':
+        case 'multiline':
           fields.push(<div className={classes.itemContainer} key={f.key}>
             <div className={classes.itemTitle}>
               Text
@@ -64,6 +65,7 @@ class Inspector extends React.Component {
               className={classes.textField}
               defaultValue={f.value}
               onChange={e => { update(f.key, e.target.value) }}
+              multiline={f.type === 'multiline'}
             />
           </div>)
           break

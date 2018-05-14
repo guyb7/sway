@@ -4,10 +4,7 @@ import defaults from 'lodash/defaults'
 
 import Templates from './paper-templates/'
 
-const mmToPx = (size, dpi) => {
-  const MM_IN_INCH = 25.4
-  return size * dpi / MM_IN_INCH
-}
+import { mmToPx } from './Utils'
 
 const styles = theme => {
   return {
